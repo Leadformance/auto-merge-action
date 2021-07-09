@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: NPM authentication
+        run: |
+          npm config set "//nexus.azure.cicd.solocal.com/repository/leadformance-npm-public/:_authToken" "${NPM_TOKEN}"
+          npm config set "//nexus.azure.cicd.solocal.com/repository/leadformance-npm-releases/:_authToken" "${NPM_TOKEN}"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_SOLOCAL }}
+
+      - name: Install dependencies
+        run: yarn --ignore-scripts
+
+      - name: Check lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test:cov
+
+      - name: Monitor coverage
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: slavcodev/coverage-monitor-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clover_file: 'coverage/clover.xml'
+          check: true
+          comment: true
+          threshold_alert: 80
+          threshold_warning: 90
+
+      - name: Release
+        run: yarn gh-actions-bridge-semantic-release
+        env:
+          ACTION_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_SOLOCAL }}
+          GH_TOKEN: ${{ secrets.CI_GH_TOKEN }}

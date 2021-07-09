@@ -6,7 +6,5 @@ branding:
   color: orange
 
 runs:
-  using: 'composite'
-  steps:
-    - run: echo auto-merge
-      shell: bash
+  using: 'node12'
+  main: 'dist/index.js'

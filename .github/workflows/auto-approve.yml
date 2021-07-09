@@ -1,0 +1,11 @@
+name: Auto approve & merge dependabot PR
+on: pull_request_target
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    steps:
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          github-token: ${{ secrets.CI_GH_TOKEN }}

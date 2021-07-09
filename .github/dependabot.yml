@@ -1,0 +1,15 @@
+version: 2
+registries:
+  npm-registry-solocal:
+    type: npm-registry
+    url: https://nexus.azure.cicd.solocal.com/repository/leadformance-npm-public
+    token: '${{ secrets.NPM_TOKEN_SOLOCAL }}'
+
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 5
+    registries:
+      - npm-registry-solocal

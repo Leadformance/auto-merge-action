@@ -1,0 +1,6 @@
+# Defines Tech team as default owners for everything in the repo.
+# Unless a later match takes precedence,
+# @devs-tech will be requested for review when someone opens a pull request.
+*               @Leadformance/perceval
+package.json    @Leadformance/perceval @Leadformance/dependabot-approvers
+yarn.lock       @Leadformance/perceval @Leadformance/dependabot-approvers

@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": ["@bridge"],
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  }
+}
