@@ -11,7 +11,76 @@
     "name": "Leadformance Developers",
     "email": "dev@leadformance.com"
   },
-  "keywords": ["github", "action", "merge", "pull-request"],
+  "keywords": [
+    "github",
+    "action",
+    "merge",
+    "pull-request"
+  ],
   "private": true,
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=16",
+    "yarn": ">=1.20"
+  },
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "prebuild": "rimraf dist",
+    "build": "rollup -c",
+    "lint": "yarn lint:commit && yarn lint:eslint && yarn lint:prettier",
+    "lint:fix": "yarn lint:eslint:fix && yarn lint:prettier:fix",
+    "lint:commit": "commitlint --from=$( git rev-list --tags --max-count=1 )",
+    "lint:eslint": "eslint --cache --color 'src/**/*.ts'",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:prettier": "yarn prettier -l '**/*.{ts,md,json,yml,yaml}'",
+    "lint:prettier:fix": "yarn prettier --write '**/*.{ts,md,json,yml,yaml}'",
+    "test": "jest",
+    "test:cov": "yarn test --coverage"
+  },
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@actions/github": "^5.0.0",
+    "@octokit/graphql": "^4.6.4"
+  },
+  "devDependencies": {
+    "@bridge/commitlint-config": "^3.0.0",
+    "@bridge/eslint-config": "^6.1.6",
+    "@bridge/semantic-release-config": "^4.0.33",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@types/jest": "^26.0.24",
+    "@types/jest-when": "^2.7.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "graphql-query-test-mock": "^0.12.1",
+    "husky": "^7.0.1",
+    "jest": "^27.0.6",
+    "jest-when": "^3.3.1",
+    "lint-staged": "^11.0.0",
+    "nock": "^13.1.1",
+    "prettier": "^2.3.2",
+    "rollup": "^2.52.8",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "semantic-release": "^17.4.4",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.5"
+  },
+  "lint-staged": {
+    "*.{ts,md,json,yml,yaml}": [
+      "yarn prettier --write"
+    ],
+    "*.{ts}": [
+      "yarn eslint"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional",
+      "@bridge/commitlint-config"
+    ]
+  }
 }
