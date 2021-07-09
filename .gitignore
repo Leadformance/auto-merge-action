@@ -1,0 +1,26 @@
+# IDE
+.idea
+
+# Logs
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage
+
+# Dependency directories
+node_modules
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env*
+
+# Misc
+.DS_Store

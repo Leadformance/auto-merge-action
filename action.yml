@@ -1,0 +1,12 @@
+name: 'auto-merge'
+description: 'GitHub Action that merge a pull request if all conditions are valid'
+
+branding:
+  icon: git-merge
+  color: orange
+
+runs:
+  using: 'composite'
+  steps:
+    - run: echo auto-merge
+      shell: bash
