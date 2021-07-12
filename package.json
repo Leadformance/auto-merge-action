@@ -1,6 +1,6 @@
 {
   "name": "auto-merge-action",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "GitHub Action that merge a pull request if all conditions are valid",
   "homepage": "https://Leadformance/auto-merge-action#readme",
   "repository": {
