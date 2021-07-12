@@ -44,7 +44,7 @@ describe('PullRequestsService', () => {
       ).rejects.toThrowError();
     });
 
-    it('should return client mutation id', async () => {
+    it('should mark a pull request as ready for review', async () => {
       queryMock.mockQuery({
         name: MARK_PULL_REQUEST_READY_FOR_REVIEW_MUTATION_NAME,
         variables: { pullRequestId },
@@ -83,7 +83,7 @@ describe('PullRequestsService', () => {
       ).rejects.toThrowError();
     });
 
-    it('should return team members login', async () => {
+    it('should add a review to a pull request', async () => {
       queryMock.mockQuery({
         name: ADD_PULL_REQUEST_REVIEW_MUTATION_NAME,
         variables: { pullRequestId, event, body },
@@ -121,7 +121,7 @@ describe('PullRequestsService', () => {
       ).rejects.toThrowError();
     });
 
-    it('should return pull request state', async () => {
+    it('should merge a pull request', async () => {
       queryMock.mockQuery({
         name: MERGE_PULL_REQUEST_NAME,
         variables: { pullRequestId, mergeMethod },
@@ -159,7 +159,7 @@ describe('PullRequestsService', () => {
       ).rejects.toThrowError();
     });
 
-    it('should return team members login', async () => {
+    it('should enable auto-merge on a pull request', async () => {
       const date = new Date();
 
       queryMock.mockQuery({

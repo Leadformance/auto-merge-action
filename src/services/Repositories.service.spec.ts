@@ -37,7 +37,7 @@ describe('RepositoriesService', () => {
       ).rejects.toThrowError();
     });
 
-    it('should return team members login', async () => {
+    it('should return pull request', async () => {
       queryMock.mockQuery({
         name: PULL_REQUEST_QUERY_NAME,
         variables: { owner, repo, pullRequestNumber },
