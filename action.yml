@@ -5,6 +5,41 @@ branding:
   icon: git-merge
   color: orange
 
+inputs:
+  token:
+    description: A GitHub personal access token
+    required: true
+  mergeMethod:
+    description: Strategy for merging the pull request, can be `merge`, `squash` or `rebase`
+    required: false
+    default: rebase
+  enableApproval:
+    description: Add a positive review on the pull request
+    required: false
+    default: 'false'
+  enableReadyForReview:
+    description: Marks the pull request ready for review
+    required: false
+    default: 'false'
+  title:
+    description: A text or regular expression that must match the title of the pull request
+    required: false
+  labels:
+    description: The list of required labels
+    required: false
+  users:
+    description: The list of authorized usernames for auto-merge
+    required: false
+  teams:
+    description: The list of authorized teams for auto-merge
+    required: false
+
+outputs:
+  merged:
+    description: Returns `true` if the pull request merged, `false` otherwise.
+  reason:
+    description: Reason that the auto-merge is not enabled.
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
